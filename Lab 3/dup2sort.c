@@ -14,18 +14,20 @@ int main(void) {
     int fd;
 
     /* Open my.file */
-    if ((fd = open("my.file", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR)) == -1) {
+    if ((fd = open("my.file", O_RDONLY | O_CREAT, S_IRUSR | S_IWUSR)) == -1) {
         perror("Couldn't open my.file");
         exit(1);
     }
 
-    if (dup2(STDIN_FILENO, fd) == -1) {
+    if (dup2(fd, 0) == -1) {
         perror("Could not redirect stdin");
         exit(3);
     }
 
+    close(fd);
+
     /* Replace the current process with "ls -l" */
-    execl("/bin/sort", "sort", "-k +7", NULL);
+    execlp("sort", "sort", "-k7", NULL);
 
     /* If we reach this line, execl must have failed */
     perror("Exec failed");

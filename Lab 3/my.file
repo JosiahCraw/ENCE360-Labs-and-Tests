@@ -1,1 +1,14 @@
-/bin
+-rwxr-xr-x 1 joscraw joscraw 16968 Aug  6 15:40 asyncwaiting
+-rw-r--r-- 1 joscraw joscraw  2312 Aug  6 15:42 asyncwaiting.c
+-rwxr-xr-x 1 joscraw joscraw 16664 Aug  6 16:21 dup2eg
+-rw-r--r-- 1 joscraw joscraw   762 Aug  6 16:23 dup2eg.c
+-rwxr-xr-x 1 joscraw joscraw 16664 Aug 12 07:49 dup2sort
+-rw-r--r-- 1 joscraw joscraw   727 Aug 12 07:49 dup2sort.c
+-rw------- 1 joscraw joscraw     1 Aug 12 07:44 my.file
+-rwxr-xr-x 1 joscraw joscraw 17128 Aug  6 15:42 pipe
+-rwxr-xr-x 1 joscraw joscraw 17224 Aug  6 16:08 pipe2upper
+-rw-r--r-- 1 joscraw joscraw  2396 Aug  6 16:20 pipe2upper.c
+-rw-r--r-- 1 joscraw joscraw  1807 Aug  1 08:25 pipe.c
+-rw-r--r-- 1 joscraw joscraw   903 Jul 30  2017 pipedup2.c
+-rwxr-xr-x 1 joscraw joscraw 16984 Aug  6 15:13 waiting
+-rw-r--r-- 1 joscraw joscraw  2284 Aug  5 07:50 waiting.c
