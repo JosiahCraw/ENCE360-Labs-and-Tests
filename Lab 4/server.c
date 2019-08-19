@@ -36,34 +36,30 @@ int listen_on(int port)
 
 int accept_connection(int s) {
     
-
-    sock = accept(int s, )
-    /////////////////////////////////////////////
-    // TODO: Implement in terms of 'accept'
-
-    /////////////////////////////////////////////  
-
-    return 0; // DELETE THIS !!
+    int sock = accept(s, NULL, NULL);
+    
+    return sock;
 }
 
 
 void handle_request(int msgsock) {
-    ///////////////////
 
       // This initial code reads a single message (and ignores it!)
-    char buffer[MAXDATASIZE];
+    char buffer[MAXDATASIZE] = "\0";
     int num_read = 0;
-
+    
+    while (1) {
     //read a message from the client
-    num_read = read(msgsock, buffer, MAXDATASIZE - 1);
+
+    if ((num_read = read(msgsock, buffer, MAXDATASIZE - 1)) < 0) {
+        break;
+    }
     printf("read a message %d bytes: %s\n", num_read, buffer);
-
-
-    // TODO: write a function to reply to all incoming messages
-    // while the connection remains open
-
-    ///////////////////
-
+    
+    send(msgsock, buffer, strlen(buffer), 0);
+    }
+    printf("Connection Closed!\n");
+    exit(0);
 
 }
 
@@ -72,13 +68,15 @@ void handle_request(int msgsock) {
 void handle_fork(int msgsock) {
 
     //TODO: run this line inside a forked child process
-    handle_request(msgsock);
+    int child_pid;
 
-    // Be very careful to close all sockets used, 
-    // and exit any processes or threads which aren't used
-      // Note that sockets open BEFORE a fork() are open in BOTH parent/child
+    child_pid = fork();
 
-    ///////////////////////////////////////////
+    if (child_pid == 0) {
+        handle_request(msgsock);
+    }
+
+    return;
 }
 
 
