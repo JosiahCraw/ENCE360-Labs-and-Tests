@@ -3,7 +3,7 @@
 #include <string.h> 
 #include <netdb.h> 
 #include <unistd.h>
-
+#include <sys/socket.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -24,15 +24,17 @@ int client_socket(char *hostname)
         printf("ERROR: Malformed Port\n");
         exit(EXIT_FAILURE);
     }
+    
+    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) { perror("Socket Failure"); exit(1); }
+    memset(&their_addrinfo, 0, sizeof(struct addrinfo));
 
-    /////////////////////////
+    their_addrinfo.ai_family = AF_INET;
+    their_addrinfo.ai_socktype = SOCK_STREAM;
+    their_addrinfo.ai_protocol = PF_UNSPEC;
 
-    //TODO: 
-    // 1) initialise socket using 'socket'
-    // 2) initialise 'their_addrinfo' and use 'getaddrinfo' to lookup the IP from host name
-    // 3) connect to remote host using 'connect'
+    getaddrinfo(hostname, port, &their_addrinfo, &their_addr);
 
-    ///////////////////////////////
+    connect(sockfd, their_addr->ai_addr, their_addr->ai_addrlen);
 
     return sockfd;
 }

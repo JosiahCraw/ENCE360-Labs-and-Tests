@@ -35,8 +35,9 @@ int listen_on(int port)
 
 
 int accept_connection(int s) {
+    
 
-
+    sock = accept(int s, )
     /////////////////////////////////////////////
     // TODO: Implement in terms of 'accept'
 
