@@ -29,9 +29,12 @@ typedef struct {
  */
  
 Buffer *new_buffer(size_t reserved) {
-  /* TODO */
-  
-  assert(0 && "not implemented");
+    Buffer *new_buffer = malloc(sizeof(Buffer));
+    new_buffer->length = 0;
+    new_buffer->data = (char*)malloc(reserved);
+    new_buffer->reserved = reserved;
+
+    return new_buffer;
 }
 
 
@@ -52,9 +55,18 @@ void free_buffer(Buffer *buffer) {
 
 
 void append_buffer(Buffer *buffer, char *data, size_t length) {
-  /* TODO */
-  
-  assert(0 && "not implemented");
+    if ((buffer->length + length) > buffer->reserved) {
+        while (buffer->length + length > buffer->reserved) {
+            buffer->reserved *= 2;
+        }
+        buffer->data = (char*)realloc(buffer->data, buffer->reserved);
+        memset((buffer->data+buffer->length), '\0', buffer->reserved-buffer->length);
+    }
+
+    for (int i=0; i < length; i++) {
+        *(buffer->data + buffer->length + i) = *(data + i);
+    }
+    buffer->length = buffer->length + length;
 }
     
 

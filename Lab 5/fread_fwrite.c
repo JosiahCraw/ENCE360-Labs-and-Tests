@@ -46,11 +46,16 @@ int main(int argc, char *argv[])
     
     char *buffer = malloc(chunk_size);
     
-    /*
-     * TODO: copy the file using fread/fwrite
-     * 
-     */
+    int num_chunks = file_size(fileno(src)) / chunk_size;
 
+    for (int j=0; j < num_chunks; j++) {
+        size_t readSize, writeSize;
+        readSize = fread(buffer, 1, chunk_size, src);
+        writeSize = fwrite(buffer, 1, readSize, dst);
+        if (writeSize < 1) {
+            handle_error("Write");
+        }
+    }
     
     fclose(src);
     fclose(dst);

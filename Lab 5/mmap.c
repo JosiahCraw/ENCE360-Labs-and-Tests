@@ -42,20 +42,13 @@ int main(int argc, char *argv[])
     // Need to truncate the file to the right size or mmap will fail
     if(ftruncate(dst, size)) handle_error("ftruncate");
 
+    char *mappedAddr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE, src, 0);
+    char *mappedDstAddr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, dst, 0);
     
-    /*
-     * TODO: Implement file copying using mmap.
-     * 
-     * First, mmap both the files to a region of memory.
-     * Copy the contents between the memory regions using memcpy.
-     * Use munmap to unmap the files and make sure the data is written
-     * 
-     * MAP_PRIVATE for reading the source  because we don't need to propogate writes to the file   
-     * We need MAP_SHARED on the destination so that our writes are written back to the file
-     * 
-     */
-    
-    
+    memcpy(mappedDstAddr, mappedAddr, size);
+
+    munmap(mappedAddr, size);
+    munmap(mappedDstAddr, size);
 
     close(src);
     close(dst);

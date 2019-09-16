@@ -40,12 +40,20 @@ int main(int argc, char *argv[])
     
     char *buffer = malloc(chunk_size);
     
-
-    /*
-     * TODO: copy the file using read/write
-     * 
-     */
+    int num_chunks = file_size(src) / chunk_size;
     
+    for (int j=0; j < num_chunks; j++) {
+        int bytesRead = read(src, buffer, chunk_size);
+        if (bytesRead < 1) {
+            handle_error("read");
+        }
+
+        int bytesWritten = write(dst, buffer, bytesRead);
+        if (bytesWritten < 1) {
+            handle_error("write");
+        }
+    }
+
     close(src);
     close(dst);
     
