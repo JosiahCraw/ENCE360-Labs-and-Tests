@@ -48,10 +48,13 @@ void matrix_mul_transposed(double *res, double *a, double *b, int n) {
   
   for (int i=0; i < n; i++) {
     for (int j=0; j < n; j++) {
-        double anum = bt[j+n*i];
-        double bnum = a[j+n*i];
-        double result = anum * bnum;
-        res[i*n+j] = result;
+      double result = 0.0;
+      for (int k=0; k < n; k++) {
+        double anum = bt[j*n+k];
+        double bnum = a[i*n+k];
+        result += anum * bnum;
+      }
+      res[i*n+j] = result;
     }
   }
   // TODO: implement matrix multiplication between a and transposed matrix bt
@@ -93,9 +96,18 @@ void matrix_mul_blocked(double *res, double *a, double *b, int n, int block) {
         int i_end = min(i + block, n);
         int j_end = min(j + block, n);
         int k_end = min(k + block, n);
-        
         // loop over inner block
-        
+        for (ii = i; ii < i_end; ii++) {
+          for (jj = j; jj < j_end; jj++) {
+            for (kk = k; kk < k_end; kk++) {
+                int ij = (ii)*n+(jj);
+                int ik = (ii)*n+(kk);
+                int kj = (kk)*n+(jj);
+              res[ij] += a[ik] * b[kj];
+            }
+          }
+        }
+
         //TODO: finish blocked matrix implementation
       }
     }

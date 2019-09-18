@@ -46,7 +46,7 @@ int main(int argc, char**argv) {
   
 
 
-  benchmark_blocks(1024, 1);
+  benchmark_blocks(2048, 1);
 
   return 0;
 }
