@@ -1,5 +1,11 @@
 {
     "files.associations": {
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c",
+        "time.h": "c",
+        "math.h": "c",
+        "string.h": "c",
+        "matrix.h": "c"
     }
 }
